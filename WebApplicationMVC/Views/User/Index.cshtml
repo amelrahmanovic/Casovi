@@ -1,0 +1,71 @@
+﻿@using Models.Models;
+@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+@{
+}
+@*
+    FORMATIRANJE
+    CTRL+A -SELEKT SVE
+    CTRL+K
+    CTRL+F --FORMATIRANJE
+*@
+<style>
+    .floatRight {
+        float:right;
+    }
+</style>
+
+<span>Korisnici</span>
+
+<a class="btn btn-info floatRight" href="/User/Novi">Nova osoba</a>
+
+<form asp-action="Filter" method="post">
+    <div class="container">
+        <div class="row">
+            <div class="col-6 col-md-10 col-sm-12">
+                <div class="form-group">
+                    <input class="form-control" placeholder="JMBG" name="JMBG" id="JMBG" />
+                </div>
+            </div>
+            <div class="col-6 col-md-2 col-sm-12">
+                <button type="submit" class="btn btn-primary top20px floatRight">Pretraga</button>
+            </div>
+        </div>
+    </div>
+    @* <div class="form-group">
+        <label>Ime:</label>
+        <input class="form-control" name="Ime" id="Ime" />
+    </div>
+    <div class="form-group">
+        <label>Prezime:</label>
+        <input class="form-control" name="Prezime" id="Prezime" />
+    </div>*@
+    
+    
+</form>
+
+<table class="table">
+    <thead>
+    <th>Id</th>
+    <th>Ime</th>
+    <th>Prezime</th>
+    <th>JMBG</th>
+    <th>Akcije</th>
+    </thead>
+    <tbody>
+        @foreach (var osoba in ViewData["Osobe"] as List<Osoba>)
+        {
+            <tr>
+                <td>@osoba.Id</td>
+                <td>@osoba.Ime</td>
+                <td>@osoba.Prezime</td>
+                <td>@osoba.JMBG</td>
+                <td>
+                    <a class="btn btn-danger" href="/User/Izbrisi?id=@osoba.Id">Izbrisi</a>
+                    <a class="btn btn-primary" href="/User/Edit?id=@osoba.Id">Edit</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
