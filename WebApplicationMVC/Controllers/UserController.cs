@@ -8,7 +8,8 @@ namespace WebApplicationMVC.Controllers
     public class UserController : Controller
     {
         static string URL = "http://localhost:51756/api/Osoba/";
-        OsobaDAL dal = new OsobaDAL(URL);
+        //OsobaDAL dal = new OsobaDAL(URL);
+        OsobaDAL dal = new OsobaDAL();
         public async Task<IActionResult> Index()
         {
             List<Osoba> osobe = await dal.GetAllAsync();

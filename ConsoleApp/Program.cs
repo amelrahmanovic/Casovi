@@ -2,8 +2,9 @@
 using Models.DataAccessLayer;
 using Models.Models;
 
-string URL = "http://localhost:51756/api/Osoba/";
-OsobaDAL osobaDAL = new OsobaDAL(URL);
+//string URL = "http://localhost:51756/api/Osoba/";
+//OsobaDAL osobaDAL = new OsobaDAL(URL);
+OsobaDAL osobaDAL = new OsobaDAL();
 int ponovi = 0;
 do
 {

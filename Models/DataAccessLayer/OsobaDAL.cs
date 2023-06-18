@@ -10,18 +10,22 @@ namespace Models.DataAccessLayer
 {
     public class OsobaDAL
     {
-        private string URL;
+        private string URL = "http://localhost:51756/api/Osoba/";
         HttpClient client = new HttpClient();
-        public OsobaDAL(string _URL)
+        public OsobaDAL()
         {
-            URL = _URL;
         }
+        //public OsobaDAL(string _URL)
+        //{
+        //    URL = _URL;
+        //}
         public async Task<List<Osoba>> GetAllAsync()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, URL);
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            string json = await response.Content.ReadAsStringAsync();
+            var json = await response.Content.ReadAsStringAsync();
+
 
             return JsonConvert.DeserializeObject<List<Osoba>>(json);
         }
