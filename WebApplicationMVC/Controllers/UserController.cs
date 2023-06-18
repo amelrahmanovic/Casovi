@@ -9,28 +9,29 @@ namespace WebApplicationMVC.Controllers
     {
         static string URL = "http://localhost:51756/api/Osoba/";
         //OsobaDAL dal = new OsobaDAL(URL);
-        OsobaDAL dal = new OsobaDAL();
+        //OsobaDAL dal = new OsobaDAL();
+        OsobaDAL dal = new OsobaDAL(URL, -1);
         public async Task<IActionResult> Index()
         {
             List<Osoba> osobe = await dal.GetAllAsync();
-            
+
             string JMBG = TempData["jmbg"] as string;
             if (JMBG != null)
             {
-                osobe = osobe.Where(x=>x.JMBG==JMBG).ToList();
+                osobe = osobe.Where(x => x.JMBG == JMBG).ToList();
             }
 
             ViewData["Osobe"] = osobe;
             return View();
         }
-        public IActionResult Novi() 
+        public IActionResult Novi()
         {
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Registracija(OsobaViewModel osobaViewModel)
         {
-            if(osobaViewModel.Id > 0)
+            if (osobaViewModel.Id > 0)
                 dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG });
             else
                 await dal.InsertAsync(new Osoba() { Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG });
@@ -40,7 +41,7 @@ namespace WebApplicationMVC.Controllers
         [HttpPost]
         public async Task<IActionResult> Update(OsobaViewModel osobaViewModel)
         {
-            dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG=osobaViewModel.JMBG });
+            dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika });
 
             return RedirectToAction("Index");
         }
@@ -53,7 +54,7 @@ namespace WebApplicationMVC.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             Osoba osoba = await dal.GetByIdAsync(id);
-            OsobaViewModel osobaViewModel = new OsobaViewModel() { Id=osoba.Id, Ime=osoba.Ime, Prezime = osoba.Prezime, JMBG=osoba.JMBG };
+            OsobaViewModel osobaViewModel = new OsobaViewModel() { Id = osoba.Id, Ime = osoba.Ime, Prezime = osoba.Prezime, JMBG = osoba.JMBG, URLSlika = osoba.URLSlika };
             //ViewData["Osoba"] = osoba;
             return View(osobaViewModel);
         }

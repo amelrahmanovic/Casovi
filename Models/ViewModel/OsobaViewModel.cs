@@ -16,5 +16,6 @@ namespace Models.ViewModel
         public string Prezime { get; set; }
         [Required]
         public string JMBG { get; set; }
+        public string URLSlika { get; set; }
     }
 }

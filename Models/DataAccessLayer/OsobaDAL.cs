@@ -10,24 +10,43 @@ namespace Models.DataAccessLayer
 {
     public class OsobaDAL
     {
-        private string URL = "http://localhost:51756/api/Osoba/";
+        private string URL;
+        private int MaxOsoba = -1;
         HttpClient client = new HttpClient();
+
+        #region Konsturktori
+
+        //1. OsobaDAL dal = new OsobaDAL(string)/OsobaDAL()
+        //2. Funkcije
+        public OsobaDAL(string _URL)
+        {
+            URL = _URL;
+        }
         public OsobaDAL()
         {
+            URL = "http://localhost:51756/api/Osoba/";
         }
-        //public OsobaDAL(string _URL)
-        //{
-        //    URL = _URL;
-        //}
+        public OsobaDAL(string _URL, int maxOsoba)
+        {
+            URL = _URL;
+            MaxOsoba = maxOsoba;
+        }
+
+        #endregion
+
+        #region Funkcije
         public async Task<List<Osoba>> GetAllAsync()
         {
             var request = new HttpRequestMessage(HttpMethod.Get, URL);
             var response = await client.SendAsync(request);
             response.EnsureSuccessStatusCode();
-            var json = await response.Content.ReadAsStringAsync();
+            string json = await response.Content.ReadAsStringAsync();
 
+            var Osobelista = JsonConvert.DeserializeObject<List<Osoba>>(json);
+            if (MaxOsoba != -1)
+                Osobelista = Osobelista.Take(MaxOsoba).ToList();
 
-            return JsonConvert.DeserializeObject<List<Osoba>>(json);
+            return Osobelista;
         }
         public async Task<Osoba> GetByIdAsync(int id)
         {
@@ -68,6 +87,7 @@ DeleteAsync(int id)
             response.EnsureSuccessStatusCode();
             //Console.WriteLine(await response.Content.ReadAsStringAsync());
         }
+        #endregion
 
     }
 }

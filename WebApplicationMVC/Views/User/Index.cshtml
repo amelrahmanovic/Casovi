@@ -12,7 +12,11 @@
 *@
 <style>
     .floatRight {
-        float:right;
+        float: right;
+    }
+
+    .height38px {
+        height: 38px;
     }
 </style>
 
@@ -34,15 +38,15 @@
         </div>
     </div>
     @* <div class="form-group">
-        <label>Ime:</label>
-        <input class="form-control" name="Ime" id="Ime" />
+    <label>Ime:</label>
+    <input class="form-control" name="Ime" id="Ime" />
     </div>
     <div class="form-group">
-        <label>Prezime:</label>
-        <input class="form-control" name="Prezime" id="Prezime" />
+    <label>Prezime:</label>
+    <input class="form-control" name="Prezime" id="Prezime" />
     </div>*@
-    
-    
+
+
 </form>
 
 <table class="table">
@@ -51,6 +55,7 @@
     <th>Ime</th>
     <th>Prezime</th>
     <th>JMBG</th>
+    <th>Slika</th>
     <th>Akcije</th>
     </thead>
     <tbody>
@@ -61,6 +66,7 @@
                 <td>@osoba.Ime</td>
                 <td>@osoba.Prezime</td>
                 <td>@osoba.JMBG</td>
+                <td> <img class="height38px" src="@osoba.URLSlika"> </td>
                 <td>
                     <a class="btn btn-danger" href="/User/Izbrisi?id=@osoba.Id">Izbrisi</a>
                     <a class="btn btn-primary" href="/User/Edit?id=@osoba.Id">Edit</a>
