@@ -13,5 +13,8 @@ namespace Models.Models
         public string Prezime { get; set; }
         public string JMBG { get; set; }
         public string URLSlika { get; set; }
+
+        public int? FirmaId { get; set; } //FK
+        public Firma Firma { get; set;}
     }
 }

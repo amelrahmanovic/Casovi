@@ -28,6 +28,18 @@ namespace WebApplication3.Controllers
             return await _context.Osoba.ToListAsync();
             //return _context.Osoba.ToList();
         }
+        
+        [Route("/api/Osoba/GetOsobaCustom")]
+        // GET: api/Osoba
+        [HttpGet]
+        public async Task<ActionResult<IEnumerable<Osoba>>> GetOsobaCustom()
+        {
+            //string sql = "SELECT O.Ime+' '+o.Prezime AS Osoba, O.JMBG, O.FirmaId, F.Naziv\r\nFROM Osoba AS O JOIN Firma AS F ON O.FirmaId=F.FirmaPK";
+            var x = _context.Osoba.FromSqlRaw($"SELECT o.*, F.Naziv\r\nFROM Osoba AS O JOIN Firma AS F ON O.FirmaId=F.FirmaPK").Include("Firma").ToList();
+
+            return x;
+            //return _context.Osoba.ToList();
+        }
 
         // GET: api/Osoba/5
         [HttpGet("{id}")]

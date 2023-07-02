@@ -48,6 +48,19 @@ namespace Models.DataAccessLayer
 
             return Osobelista;
         }
+        public async Task<List<Osoba>> GetAllCustomAsync()
+        {
+            var request = new HttpRequestMessage(HttpMethod.Get, URL+"GetOsobaCustom");
+            var response = await client.SendAsync(request);
+            response.EnsureSuccessStatusCode();
+            string json = await response.Content.ReadAsStringAsync();
+
+            var Osobelista = JsonConvert.DeserializeObject<List<Osoba>>(json);
+            if (MaxOsoba != -1)
+                Osobelista = Osobelista.Take(MaxOsoba).ToList();
+
+            return Osobelista;
+        }
         public async Task<Osoba> GetByIdAsync(int id)
         {
             var request2 = new HttpRequestMessage(HttpMethod.Get, URL + id.ToString());

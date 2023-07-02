@@ -13,6 +13,8 @@ namespace WebApplicationMVC.Controllers
         OsobaDAL dal = new OsobaDAL(URL, -1);
         public async Task<IActionResult> Index()
         {
+            List<Osoba> osobeCustom = await dal.GetAllCustomAsync();
+
             List<Osoba> osobe = await dal.GetAllAsync();
 
             string JMBG = TempData["jmbg"] as string;
@@ -32,9 +34,9 @@ namespace WebApplicationMVC.Controllers
         public async Task<IActionResult> Registracija(OsobaViewModel osobaViewModel)
         {
             if (osobaViewModel.Id > 0)
-                dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG });
+                dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika });
             else
-                await dal.InsertAsync(new Osoba() { Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG });
+                await dal.InsertAsync(new Osoba() { Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika });
 
             return RedirectToAction("Index");
         }
