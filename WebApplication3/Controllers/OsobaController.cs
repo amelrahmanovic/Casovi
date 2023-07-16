@@ -25,7 +25,7 @@ namespace WebApplication3.Controllers
         [HttpGet]
         public async Task<ActionResult<IEnumerable<Osoba>>> GetOsoba()
         {
-            return await _context.Osoba.ToListAsync();
+            return await _context.Osoba.Include("Firma").ToListAsync();
             //return _context.Osoba.ToList();
         }
         
@@ -45,7 +45,7 @@ namespace WebApplication3.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<Osoba>> GetOsoba(int id)
         {
-            var osoba = await _context.Osoba.FindAsync(id);
+            var osoba = await _context.Osoba.Include("Firma").SingleOrDefaultAsync(x=>x.Id==id);
 
             if (osoba == null)
             {

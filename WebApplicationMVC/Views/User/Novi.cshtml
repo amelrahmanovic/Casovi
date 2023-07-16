@@ -1,8 +1,9 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
+﻿@using Models.Models;
+@using Models.ViewModel;
 @{
+    List<Firma> Firme = (List<Firma>)ViewData["firme"];
 }
+
 <style>
     .top20px {
         margin-top: 20px;
@@ -31,6 +32,18 @@
         <label>JMBG:</label>
         <input class="form-control" name="JMBG" id="JMBG" required />
     </div>
+
+    <div class="form-group">
+        <label>Firma:</label>
+        
+        <select class="form-control" name="FirmaId" id="FirmaId">
+            @foreach (Firma x in Firme)
+            {
+                <option class="form-control" value="@x.FirmaPK">@x.Naziv</option>
+            }
+        </select>
+    </div>
+
     <div class="form-group">
         <label>URL slika:</label>
         <input class="form-control" name="URLSlika" id="URLSlika" required />

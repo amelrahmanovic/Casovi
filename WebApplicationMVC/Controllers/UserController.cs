@@ -8,9 +8,11 @@ namespace WebApplicationMVC.Controllers
     public class UserController : Controller
     {
         static string URL = "http://localhost:51756/api/Osoba/";
+        static string URLFirma = "http://localhost:51756/api/Firma/";
         //OsobaDAL dal = new OsobaDAL(URL);
         //OsobaDAL dal = new OsobaDAL();
         OsobaDAL dal = new OsobaDAL(URL, -1);
+        FirmaDAL firmaDAL = new FirmaDAL(URLFirma);
         public async Task<IActionResult> Index()
         {
             List<Osoba> osobeCustom = await dal.GetAllCustomAsync();
@@ -26,24 +28,26 @@ namespace WebApplicationMVC.Controllers
             ViewData["Osobe"] = osobe;
             return View();
         }
-        public IActionResult Novi()
+        public async Task<IActionResult> Novi()
         {
+            List<Firma> firme = await firmaDAL.GetAllAsync();
+            ViewData["firme"] = firme;
             return View();
         }
         [HttpPost]
         public async Task<IActionResult> Registracija(OsobaViewModel osobaViewModel)
         {
             if (osobaViewModel.Id > 0)
-                dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika });
+                dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika, FirmaId = osobaViewModel.FirmaId });
             else
-                await dal.InsertAsync(new Osoba() { Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika });
+                await dal.InsertAsync(new Osoba() { Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika, FirmaId = osobaViewModel.FirmaId });
 
             return RedirectToAction("Index");
         }
         [HttpPost]
         public async Task<IActionResult> Update(OsobaViewModel osobaViewModel)
         {
-            dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika });
+            dal.UpdateAsync(new Osoba() { Id = osobaViewModel.Id, Ime = osobaViewModel.Ime, Prezime = osobaViewModel.Prezime, JMBG = osobaViewModel.JMBG, URLSlika = osobaViewModel.URLSlika, FirmaId = osobaViewModel.FirmaId });
 
             return RedirectToAction("Index");
         }
@@ -56,7 +60,11 @@ namespace WebApplicationMVC.Controllers
         public async Task<IActionResult> Edit(int id)
         {
             Osoba osoba = await dal.GetByIdAsync(id);
-            OsobaViewModel osobaViewModel = new OsobaViewModel() { Id = osoba.Id, Ime = osoba.Ime, Prezime = osoba.Prezime, JMBG = osoba.JMBG, URLSlika = osoba.URLSlika };
+            OsobaViewModel osobaViewModel = new OsobaViewModel() { Id = osoba.Id, Ime = osoba.Ime, Prezime = osoba.Prezime, JMBG = osoba.JMBG, URLSlika = osoba.URLSlika, FirmaId= (int)osoba.FirmaId };
+            
+            List<Firma> firme = await firmaDAL.GetAllAsync();
+            ViewData["firme"] = firme;
+
             //ViewData["Osoba"] = osoba;
             return View(osobaViewModel);
         }

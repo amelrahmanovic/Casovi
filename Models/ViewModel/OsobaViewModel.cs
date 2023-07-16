@@ -17,5 +17,6 @@ namespace Models.ViewModel
         [Required]
         public string JMBG { get; set; }
         public string URLSlika { get; set; }
+        public int FirmaId { get; set; }
     }
 }

@@ -11,5 +11,6 @@ namespace WebApplication3
         }
 
         public DbSet<Osoba> Osoba { get; set; }
+        public DbSet<Firma> Firma { get; set; }
     }
 }

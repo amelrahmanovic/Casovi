@@ -15,6 +15,6 @@ namespace Models.Models
         public string URLSlika { get; set; }
 
         public int? FirmaId { get; set; } //FK
-        public Firma Firma { get; set;}
+        public Firma? Firma { get; set;}
     }
 }
